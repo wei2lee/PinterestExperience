@@ -1,5 +1,5 @@
 //
-//  MyCollectionViewLayout.swift
+//  StaggerCollecitonViewLayout.swift
 //  CollecitonViewLayout
 //
 //  Created by Yee Chuan Lee on 11/03/2019.
@@ -18,82 +18,138 @@ func profile(_ name: String, _ closure:()->()) {
     print("\(name)duration=\(end-start)")
 }
 
-protocol MyCollecitonViewLayoutDelegate: class {
-    func getItemHeight(for indexPath: IndexPath, width: CGFloat) -> CGFloat
+protocol StaggerCollecitonViewLayoutDelegate: class {
+    func staggerCollectionViewLayoutItemHeight(for indexPath: IndexPath, itemWidth: CGFloat) -> CGFloat
 }
-class MyCollecitonViewLayout : UICollectionViewLayout {
+class StaggerCollecitonViewLayout : UICollectionViewLayout {
+    typealias AttributesResult = (attributes: [IndexPath: StaggerCollectionViewLayoutAttributes], contentSize: CGSize)
+    
     fileprivate var prepared: Bool = false
-    fileprivate var attributesCache: [IndexPath: MyCollectionViewLayoutAttributes] = [:]
+    fileprivate var attributesCache: [IndexPath: StaggerCollectionViewLayoutAttributes] = [:]
     fileprivate var contentSize = CGSize.zero
     fileprivate let columnNumber:Int = 3
     fileprivate let lineSpace:CGFloat = 10
+    fileprivate var updateIsScrollingTimer: Timer? = nil
     var shouldInvalidateDuringScrolling: Bool = false
     var estimateItemHeight: CGFloat = 360
-    weak var delegate: MyCollecitonViewLayoutDelegate? = nil
+    weak var delegate: StaggerCollecitonViewLayoutDelegate? = nil
     var isScrolling: Bool = false {
         didSet {
             guard let collectionView = collectionView else { return }
             if !isScrolling {
-                var context = MyCollectionViewLayoutInvalidationContext()
-                context.boundOriginChanged = true
-                context.bounds = collectionView.bounds
+                let context = StaggerCollectionViewLayoutInvalidationContext()
+                context.invalidatedBounds = collectionView.bounds
                 invalidateLayout(with: context)
             }
         }
     }
     
-    override class var invalidationContextClass: AnyClass { return MyCollectionViewLayoutInvalidationContext.self }
+    deinit {
+        self.updateIsScrollingTimer?.invalidate()
+    }
     
-    override class var layoutAttributesClass: AnyClass { return MyCollectionViewLayoutAttributes.self }
+    func setupTimerUpdateIsScrolling() {
+        self.updateIsScrollingTimer?.invalidate()
+        self.updateIsScrollingTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] timer in
+            guard let `self` = self else { return }
+            guard let collectionView = self.collectionView else { return }
+            let newValue = collectionView.isDragging || collectionView.isDecelerating
+            if newValue != self.isScrolling {
+                self.isScrolling = newValue
+            }
+        }
+        RunLoop.current.add(updateIsScrollingTimer!, forMode: .common)
+    }
+    
+    override class var invalidationContextClass: AnyClass { return StaggerCollectionViewLayoutInvalidationContext.self }
+    
+    override class var layoutAttributesClass: AnyClass { return StaggerCollectionViewLayoutAttributes.self }
     
     override func prepare() {
         log("prepare")
         guard !prepared else { return }
         prepared = true
-        guard let collectionView = self.collectionView else { return }
-        let ret = createLayout(withEstimateItemHeight: true)
-        self.contentSize = ret.contentSize
-        self.attributesCache = ret.attributes
-        
-        //let _ = createLayout(withEstimateItemHeight: true)
+        guard self.collectionView != nil else { return }
+        self.setupTimerUpdateIsScrolling()
+        let (attributes, contentSize) = createLayout(isEstimateItemHeight: true)
+        self.contentSize = contentSize
+        self.attributesCache = attributes
     }
     
-    func createAdjustAllCachedLayoutOriginY(attributesCache: [IndexPath: MyCollectionViewLayoutAttributes]) -> [IndexPath: MyCollectionViewLayoutAttributes] {
-        var ret: [IndexPath: MyCollectionViewLayoutAttributes] = [:]
-        let groupByColumnIndex: Dictionary<Int, [(key: IndexPath, value: MyCollectionViewLayoutAttributes)]> =
-            Dictionary(grouping: attributesCache.enumerated().map { $0.element }, by: { return $0.key.item % columnNumber })
-        for columnIndex in groupByColumnIndex.keys {
-            let columnList = groupByColumnIndex[columnIndex]!
-            let sortedColumnList = columnList.sorted(by: {  $0.key.item < $1.key.item })
-            var yoffset: CGFloat = 0
-            for (index, attr) in sortedColumnList.enumerated() {
-                let indexPath: IndexPath = attr.key
-                if index == 0 {
-                    yoffset = attr.value.frame.maxY
-                    ret[indexPath] = attr.value
-                } else {
-                    var origin = attr.value.frame.origin
-                    origin.y = yoffset + lineSpace
-                    attr.value.frame.origin = origin
-                    yoffset = attr.value.frame.maxY
-                    ret[indexPath] = attr.value
+    func createAdjustedLayoutOriginY(attributesCache: [IndexPath: StaggerCollectionViewLayoutAttributes]) -> AttributesResult {
+        
+        
+        var ret: [IndexPath: StaggerCollectionViewLayoutAttributes] = [:]
+        var contentSize: CGSize = .zero
+        profile("createAdjustedLayoutOriginY@") {
+            let groupByColumnIndex: Dictionary<Int, [(key: IndexPath, value: StaggerCollectionViewLayoutAttributes)]> =
+                Dictionary(grouping: attributesCache.enumerated().map { $0.element }, by: { return $0.key.item % columnNumber })
+            for columnIndex in groupByColumnIndex.keys {
+                let columnList = groupByColumnIndex[columnIndex]!
+                let sortedColumnList = columnList.sorted(by: {  $0.key.item < $1.key.item })
+                var yoffset: CGFloat = 0
+                for (index, attr) in sortedColumnList.enumerated() {
+                    let indexPath: IndexPath = attr.key
+                    if index == 0 {
+                        yoffset = attr.value.frame.maxY
+                        ret[indexPath] = attr.value
+                    } else {
+                        var origin = attr.value.frame.origin
+                        origin.y = yoffset + lineSpace
+                        attr.value.frame.origin = origin
+                        yoffset = attr.value.frame.maxY
+                        ret[indexPath] = attr.value
+                    }
                 }
             }
         }
-        return ret
+        
+        contentSize = createContentSize(attributesCache: ret)
+        
+        return (attributes: ret, contentSize: contentSize)
     }
-    func invalidateAllCachedIndexPaths(context: MyCollectionViewLayoutInvalidationContext) {
+    
+    func createContentSize(attributesCache: [IndexPath: StaggerCollectionViewLayoutAttributes]) -> CGSize {
+        return attributesCache.values
+            .map { $0.frame }
+            .reduce(CGSize.zero, { CGSize(width: max($0.width, $1.maxX), height: max($0.height, $1.maxY)) })
+    }
+    
+    func invalidateAllCachedIndexPaths(context: StaggerCollectionViewLayoutInvalidationContext) {
         let indexPaths = attributesCache.keys.sorted(by: { $0.item < $1.item })
         context.invalidateItems(at: indexPaths)
     }
     
-    func createLayout(withEstimateItemHeight isEstimateItemHeight: Bool) -> (contentSize: CGSize, attributes: [IndexPath: MyCollectionViewLayoutAttributes]) {
+    func createLayout(attributesCache: [IndexPath: StaggerCollectionViewLayoutAttributes], bounds: CGRect) -> (indexPaths: [IndexPath], contentSize: CGSize, attributes: [IndexPath: StaggerCollectionViewLayoutAttributes]) {
+        let attributesInBound = attributesCache.values.filter { att in
+            return bounds.intersects(att.frame)
+        }
+        var ret: [IndexPath: StaggerCollectionViewLayoutAttributes] = attributesCache
+        let estimatedAttributes = attributesInBound.filter {$0.isEstimatedItemSize}
+        if estimatedAttributes.count > 0 {
+            let indexPaths = estimatedAttributes.map { $0.indexPath }
+            for attributes in estimatedAttributes {
+                let indexPath = attributes.indexPath
+                let newAttributes = createAttribute(isEstimateItemHeight: false,
+                                                    columnIndex: attributes.columnIndex,
+                                                    yoffset: attributes.frame.minY-lineSpace,
+                                                    indexPath: attributes.indexPath)
+                ret[indexPath] = newAttributes
+            }
+            let (attributesCache, contentSize) = createAdjustedLayoutOriginY(attributesCache: attributesCache)
+            return (attributes: attributesCache, contentSize: contentSize, indexPaths: indexPaths)
+        } else {
+            return (attributes: attributesCache, contentSize: self.contentSize, indexPaths: [])
+        }
+    }
+    
+    func createLayout(isEstimateItemHeight: Bool) -> AttributesResult {
         guard let collectionView = self.collectionView else { return (contentSize: .zero, attributes: [:]) }
         var contentSize: CGSize = .zero
-        var attributesCache: [IndexPath: MyCollectionViewLayoutAttributes] = [:]
+        var attributesCache: [IndexPath: StaggerCollectionViewLayoutAttributes] = [:]
         
         var yoffset:[Int: CGFloat] = [:]
-        profile("prepare@ isEstimateItemHeight=\(isEstimateItemHeight)") {
+        profile("prepare@ create all with estimate height") {
             for i in 0..<collectionView.numberOfSections {
                 for _j in 0..<collectionView.numberOfItems(inSection: i) {
                     let j = _j % columnNumber
@@ -113,7 +169,9 @@ class MyCollecitonViewLayout : UICollectionViewLayout {
             }
         }
         
-        //if !isEstimateItemHeight {
+        profile("prepare@ create visible bound height") {
+            
+        
             let attributesInBound = attributesCache.values.filter { att in
                 return collectionView.bounds.intersects(att.frame)
             }
@@ -127,14 +185,16 @@ class MyCollecitonViewLayout : UICollectionViewLayout {
                                                         indexPath: attributes.indexPath)
                     attributesCache[indexPath] = newAttributes
                 }
-                attributesCache = createAdjustAllCachedLayoutOriginY(attributesCache: attributesCache)
+                let (attributesCache, contentSize) = createAdjustedLayoutOriginY(attributesCache: attributesCache)
+                self.attributesCache = attributesCache
+                self.contentSize = contentSize
             }
-        //}
         
+        }
         return (contentSize: contentSize, attributes: attributesCache)
     }
-    func createAttribute(isEstimateItemHeight:Bool, columnIndex: Int, yoffset: CGFloat, indexPath: IndexPath) -> MyCollectionViewLayoutAttributes {
-        let attributes = MyCollectionViewLayoutAttributes(forCellWith: indexPath)
+    func createAttribute(isEstimateItemHeight:Bool, columnIndex: Int, yoffset: CGFloat, indexPath: IndexPath) -> StaggerCollectionViewLayoutAttributes {
+        let attributes = StaggerCollectionViewLayoutAttributes(forCellWith: indexPath)
         attributes.isEstimatedItemSize = isEstimateItemHeight
         let cellWidth:CGFloat = floor((collectionView!.bounds.width - CGFloat(columnNumber-1) * lineSpace) / CGFloat(columnNumber))
         attributes.columnIndex = columnIndex
@@ -146,8 +206,7 @@ class MyCollecitonViewLayout : UICollectionViewLayout {
     }
     
     func getItemHeight(for indexPath: IndexPath, width: CGFloat) -> CGFloat {
-        return delegate?.getItemHeight(for: indexPath, width: width) ?? 0
-//        return estimateItemHeight
+        return delegate?.staggerCollectionViewLayoutItemHeight(for:indexPath, itemWidth: width) ?? 0
     }
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         var start = Date().timeIntervalSince1970
@@ -163,16 +222,6 @@ class MyCollecitonViewLayout : UICollectionViewLayout {
     override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         log("layoutAttributesForItem@ \(indexPath)")
         return attributesCache[indexPath]
-//        if let attributes = attributesCache[indexPath], attributes.isEstimatedItemSize {
-//            let newAttributes = createAttribute(isEstimateItemHeight: false,
-//                                                columnIndex: attributes.columnIndex,
-//                                                yoffset: attributes.frame.minY-lineSpace,
-//                                                indexPath: attributes.indexPath)
-//            attributesCache[indexPath] = newAttributes
-//            return attributesCache[indexPath]
-//        } else {
-//            return attributesCache[indexPath]
-//        }
     }
     
     
@@ -189,14 +238,14 @@ class MyCollecitonViewLayout : UICollectionViewLayout {
     
     
     override func invalidateLayout(with context: UICollectionViewLayoutInvalidationContext) {
-        let context = context as! MyCollectionViewLayoutInvalidationContext
+        let context = context as! StaggerCollectionViewLayoutInvalidationContext
         log("invalidateLayoutWithContext@ \(context.debugDescription)")
         if context.invalidateEverything {
             prepared = false
         }
-        if context.boundOriginChanged {
+        if context.invalidatedBounds != .zero {
             let attributesInBound = attributesCache.values.filter { att in
-                return context.bounds.intersects(att.frame)
+                return context.invalidatedBounds.intersects(att.frame)
             }
             let estimatedAttributes = attributesInBound.filter {$0.isEstimatedItemSize}
             if estimatedAttributes.count > 0 {
@@ -206,14 +255,16 @@ class MyCollecitonViewLayout : UICollectionViewLayout {
                                                         columnIndex: attributes.columnIndex,
                                                         yoffset: attributes.frame.minY-lineSpace,
                                                         indexPath: attributes.indexPath)
-                    attributesCache[indexPath] = newAttributes
+                    self.attributesCache[indexPath] = newAttributes
                 }
                 
                 
                 context.invalidateItems(at:
                     estimatedAttributes.map { $0.indexPath })
                 
-                attributesCache = createAdjustAllCachedLayoutOriginY(attributesCache: self.attributesCache)
+                let (attributesCache, contentSize) = createAdjustedLayoutOriginY(attributesCache: self.attributesCache)
+                self.attributesCache = attributesCache
+                self.contentSize = contentSize
                 invalidateAllCachedIndexPaths(context: context)
             }
         }
@@ -229,14 +280,14 @@ class MyCollecitonViewLayout : UICollectionViewLayout {
         }
     }
     
-    //
-    
     override func invalidationContext(forBoundsChange newBounds: CGRect) -> UICollectionViewLayoutInvalidationContext {
-        let ret = super.invalidationContext(forBoundsChange: newBounds) as! MyCollectionViewLayoutInvalidationContext
+        let ret = super.invalidationContext(forBoundsChange: newBounds) as! StaggerCollectionViewLayoutInvalidationContext
         log("invalidationContext(forBoundsChange@ ret = \(ret.debugDescription)")
-        if newBounds.origin != collectionView!.bounds.origin {
-            ret.boundOriginChanged = true
-            ret.bounds = newBounds
+        if shouldInvalidateDuringScrolling {
+            if newBounds.origin != collectionView!.bounds.origin {
+                ret.boundOriginChanged = true
+                ret.invalidatedBounds = newBounds
+            }
         }
         return ret
     }
@@ -275,16 +326,16 @@ extension UICollectionViewLayoutInvalidationContext {
     }
 }
 
-class MyCollectionViewLayoutInvalidationContext: UICollectionViewLayoutInvalidationContext {
+class StaggerCollectionViewLayoutInvalidationContext: UICollectionViewLayoutInvalidationContext {
     var boundOriginChanged: Bool = false
-    var bounds: CGRect = .zero
+    var invalidatedBounds: CGRect = .zero
     override func invalidateItems(at indexPaths: [IndexPath]) {
         log("invalidateItemsAtIndexPath@ \(indexPaths)")
         return super.invalidateItems(at: indexPaths)
     }
 }
 
-class MyCollectionViewLayoutAttributes: UICollectionViewLayoutAttributes {
+class StaggerCollectionViewLayoutAttributes: UICollectionViewLayoutAttributes {
     var isEstimatedItemSize: Bool = false
     var columnIndex: Int = 0
 }

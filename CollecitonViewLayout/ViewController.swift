@@ -10,13 +10,13 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class ViewController: UIViewController, UICollectionViewDataSource,MyCollecitonViewLayoutDelegate {
+class ViewController: UIViewController, UICollectionViewDataSource,StaggerCollecitonViewLayoutDelegate {
 
     let nib = UINib(nibName: "ContactLeadNewCell", bundle: nil)
     lazy var sizingCell: Cell = { [unowned self] in return self.nib.instantiate(withOwner: nil, options: nil).first as! Cell }()
     @IBOutlet weak var collectionView : UICollectionView!
     var datas: [ContactLeadModel] = []
-    var myCollectionLayout = MyCollecitonViewLayout()
+    var myCollectionLayout = StaggerCollecitonViewLayout()
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -45,18 +45,7 @@ class ViewController: UIViewController, UICollectionViewDataSource,MyCollecitonV
         //DispatchQueue.main.asyncAfter(deadline: .now() + 0, execute: {
         // Do any additional setup after loading the view, typically from a nib.
             run()
-        //})
-        
-        
-        
-        var timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { timer in
-            let newValue = self.collectionView.isDragging || self.collectionView.isDecelerating
-            if newValue != self.myCollectionLayout.isScrolling {
-                self.myCollectionLayout.isScrolling = newValue
-            }
-        }
-        RunLoop.current.add(timer, forMode: .common)
-        
+        //})    
     }
     //MARK: <UICollectionDataSource >
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -167,10 +156,10 @@ class ViewController: UIViewController, UICollectionViewDataSource,MyCollecitonV
     
     //MARK: <MyCollecitonViewLayoutDelegate>
     
-    func getItemHeight(for indexPath: IndexPath, width: CGFloat) -> CGFloat {
+    func staggerCollectionViewLayoutItemHeight(for indexPath: IndexPath, itemWidth: CGFloat) -> CGFloat {
         let model = datas[indexPath.item]
         configureCell(cell: sizingCell, model: model)
-        let targetSize = CGSize(width: width, height: UIView.layoutFittingCompressedSize.height)
+        let targetSize = CGSize(width: itemWidth, height: UIView.layoutFittingCompressedSize.height)
         let verticalPriority = UILayoutPriority(1)
         let size = sizingCell.containerView.systemLayoutSizeFitting(targetSize, withHorizontalFittingPriority: .required, verticalFittingPriority: verticalPriority)
         return size.height
