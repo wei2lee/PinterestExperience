@@ -10,27 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CollecitonViewLayout/MyCollectionViewLayout.swift"
-            timestampString = "574234114.422506"
+            timestampString = "574239353.15262"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "35"
-            endingLineNumber = "35"
-            landmarkName = "StaggerCollecitonViewLayout"
-            landmarkType = "3">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "CollecitonViewLayout/MyCollectionViewLayout.swift"
-            timestampString = "574234114.422649"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "37"
-            endingLineNumber = "37"
+            startingLineNumber = "38"
+            endingLineNumber = "38"
             landmarkName = "isScrolling"
             landmarkType = "24">
          </BreakpointContent>
@@ -42,12 +26,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CollecitonViewLayout/MyCollectionViewLayout.swift"
-            timestampString = "574234114.423402"
+            timestampString = "574239353.153005"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "130"
-            endingLineNumber = "130"
-            landmarkName = "createLayout(attributesCache:bounds:)"
+            startingLineNumber = "40"
+            endingLineNumber = "40"
+            landmarkName = "isScrolling"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CollecitonViewLayout/MyCollectionViewLayout.swift"
+            timestampString = "574239353.153321"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "177"
+            endingLineNumber = "177"
+            landmarkName = "createLayout(isEstimateItemHeight:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -58,12 +58,204 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CollecitonViewLayout/MyCollectionViewLayout.swift"
-            timestampString = "574234114.4234591"
+            timestampString = "574239353.1536289"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "134"
-            endingLineNumber = "134"
-            landmarkName = "createLayout(attributesCache:bounds:)"
+            startingLineNumber = "178"
+            endingLineNumber = "178"
+            landmarkName = "createLayout(isEstimateItemHeight:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CollecitonViewLayout/MyCollectionViewLayout.swift"
+            timestampString = "574239353.153927"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "70"
+            endingLineNumber = "70"
+            landmarkName = "prepare()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CollecitonViewLayout/MyCollectionViewLayout.swift"
+            timestampString = "574239353.154205"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "71"
+            endingLineNumber = "71"
+            landmarkName = "prepare()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CollecitonViewLayout/MyCollectionViewLayout.swift"
+            timestampString = "574239353.1544811"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "72"
+            endingLineNumber = "72"
+            landmarkName = "prepare()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CollecitonViewLayout/MyCollectionViewLayout.swift"
+            timestampString = "574239353.154754"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "78"
+            endingLineNumber = "78"
+            landmarkName = "prepare()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CollecitonViewLayout/MyCollectionViewLayout.swift"
+            timestampString = "574239353.155043"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "132"
+            endingLineNumber = "132"
+            landmarkName = "createLayout(isEstimateItemHeight:attributesCache:visibleBounds:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CollecitonViewLayout.StaggerCollecitonViewLayout.createLayout(attributesCache: Swift.Dictionary&lt;Foundation.IndexPath, CollecitonViewLayout.StaggerCollectionViewLayoutAttributes&gt;, visibleBounds: __C.CGRect) -&gt; (indexPaths: Swift.Array&lt;Foundation.IndexPath&gt;, attributes: Swift.Dictionary&lt;Foundation.IndexPath, CollecitonViewLayout.StaggerCollectionViewLayoutAttributes&gt;, contentSize: __C.CGSize)"
+                  moduleName = "CollecitonViewLayout"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/yeechuanlee/Desktop/dev/ios/test/CollecitonViewLayout/CollecitonViewLayout/MyCollectionViewLayout.swift"
+                  timestampString = "574238542.851162"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "128"
+                  endingLineNumber = "128"
+                  offsetFromSymbolStart = "84">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (CollecitonViewLayout.StaggerCollectionViewLayoutAttributes) -&gt; Swift.Bool in CollecitonViewLayout.StaggerCollecitonViewLayout.createLayout(attributesCache: Swift.Dictionary&lt;Foundation.IndexPath, CollecitonViewLayout.StaggerCollectionViewLayoutAttributes&gt;, visibleBounds: __C.CGRect) -&gt; (indexPaths: Swift.Array&lt;Foundation.IndexPath&gt;, attributes: Swift.Dictionary&lt;Foundation.IndexPath, CollecitonViewLayout.StaggerCollectionViewLayoutAttributes&gt;, contentSize: __C.CGSize)"
+                  moduleName = "CollecitonViewLayout"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/yeechuanlee/Desktop/dev/ios/test/CollecitonViewLayout/CollecitonViewLayout/MyCollectionViewLayout.swift"
+                  timestampString = "574238542.85356"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "129"
+                  endingLineNumber = "129"
+                  offsetFromSymbolStart = "40">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CollecitonViewLayout/MyCollectionViewLayout.swift"
+            timestampString = "574239353.155311"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "135"
+            endingLineNumber = "135"
+            landmarkName = "createLayout(isEstimateItemHeight:attributesCache:visibleBounds:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CollecitonViewLayout/MyCollectionViewLayout.swift"
+            timestampString = "574239353.155592"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "145"
+            endingLineNumber = "145"
+            landmarkName = "createLayout(isEstimateItemHeight:attributesCache:visibleBounds:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CollecitonViewLayout/MyCollectionViewLayout.swift"
+            timestampString = "574239353.155851"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "117"
+            endingLineNumber = "117"
+            landmarkName = "createAdjustedLayoutOriginY(attributesCache:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CollecitonViewLayout/MyCollectionViewLayout.swift"
+            timestampString = "574239353.156111"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "79"
+            endingLineNumber = "79"
+            landmarkName = "prepare()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CollecitonViewLayout/MyCollectionViewLayout.swift"
+            timestampString = "574239356.972652"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "254"
+            endingLineNumber = "254"
+            landmarkName = "invalidationContext(forBoundsChange:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

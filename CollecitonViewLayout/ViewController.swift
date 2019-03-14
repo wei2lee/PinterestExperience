@@ -34,14 +34,6 @@ class ViewController: UIViewController, UICollectionViewDataSource,StaggerCollec
             
         }
         
-//        let isDragging = collectionView.rx.observeWeakly(Bool.self, #keyPath(UICollectionView.isDragging)).debug("isDragging").map { $0 ?? false }
-//        let isDecelerating = collectionView.rx.observeWeakly(Bool.self, #keyPath(UICollectionView.isDecelerating)).debug("isDecelerating").map { $0 ?? false }
-//        let isScrolling = Observable.combineLatest(isDragging, isDecelerating) { $0 || $1 }.distinctUntilChanged()
-//        isScrolling.subscribe(onNext: { value in
-//            self.myCollectionLayout.isScrolling = value
-//        })
-        
-        
         //DispatchQueue.main.asyncAfter(deadline: .now() + 0, execute: {
         // Do any additional setup after loading the view, typically from a nib.
             run()

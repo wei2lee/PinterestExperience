@@ -67,13 +67,21 @@ class StaggerCollecitonViewLayout : UICollectionViewLayout {
     
     override func prepare() {
         log("prepare")
+        guard let collectionView = self.collectionView else { return }
         guard !prepared else { return }
         prepared = true
-        guard self.collectionView != nil else { return }
         self.setupTimerUpdateIsScrolling()
         let (attributes, contentSize) = createLayout(isEstimateItemHeight: true)
         self.contentSize = contentSize
         self.attributesCache = attributes
+        
+        let (_, attributes2, contentSize2) = createLayout(isEstimateItemHeight: false, attributesCache: self.attributesCache, visibleBounds: collectionView.bounds)
+        self.contentSize = contentSize2
+        self.attributesCache = attributes2
+        
+        let (attributes3, contentSize3) = createAdjustedLayoutOriginY(attributesCache: attributesCache)
+        self.contentSize = contentSize3
+        self.attributesCache = attributes3
     }
     
     func createAdjustedLayoutOriginY(attributesCache: [IndexPath: StaggerCollectionViewLayoutAttributes]) -> AttributesResult {
@@ -120,9 +128,9 @@ class StaggerCollecitonViewLayout : UICollectionViewLayout {
         context.invalidateItems(at: indexPaths)
     }
     
-    func createLayout(attributesCache: [IndexPath: StaggerCollectionViewLayoutAttributes], bounds: CGRect) -> (indexPaths: [IndexPath], contentSize: CGSize, attributes: [IndexPath: StaggerCollectionViewLayoutAttributes]) {
+    func createLayout(isEstimateItemHeight: Bool, attributesCache: [IndexPath: StaggerCollectionViewLayoutAttributes], visibleBounds: CGRect) -> (indexPaths: [IndexPath], attributes: [IndexPath: StaggerCollectionViewLayoutAttributes], contentSize: CGSize) {
         let attributesInBound = attributesCache.values.filter { att in
-            return bounds.intersects(att.frame)
+            return visibleBounds.intersects(att.frame)
         }
         var ret: [IndexPath: StaggerCollectionViewLayoutAttributes] = attributesCache
         let estimatedAttributes = attributesInBound.filter {$0.isEstimatedItemSize}
@@ -130,16 +138,15 @@ class StaggerCollecitonViewLayout : UICollectionViewLayout {
             let indexPaths = estimatedAttributes.map { $0.indexPath }
             for attributes in estimatedAttributes {
                 let indexPath = attributes.indexPath
-                let newAttributes = createAttribute(isEstimateItemHeight: false,
+                let newAttributes = createAttribute(isEstimateItemHeight: isEstimateItemHeight,
                                                     columnIndex: attributes.columnIndex,
                                                     yoffset: attributes.frame.minY-lineSpace,
                                                     indexPath: attributes.indexPath)
                 ret[indexPath] = newAttributes
             }
-            let (attributesCache, contentSize) = createAdjustedLayoutOriginY(attributesCache: attributesCache)
-            return (attributes: attributesCache, contentSize: contentSize, indexPaths: indexPaths)
+            return (indexPaths: indexPaths, attributes: ret, contentSize: contentSize)
         } else {
-            return (attributes: attributesCache, contentSize: self.contentSize, indexPaths: [])
+            return (indexPaths: [], attributes: ret, contentSize: self.contentSize)
         }
     }
     
@@ -168,29 +175,6 @@ class StaggerCollecitonViewLayout : UICollectionViewLayout {
                 }
             }
         }
-        
-        profile("prepare@ create visible bound height") {
-            
-        
-            let attributesInBound = attributesCache.values.filter { att in
-                return collectionView.bounds.intersects(att.frame)
-            }
-            let estimatedAttributes = attributesInBound.filter {$0.isEstimatedItemSize}
-            if estimatedAttributes.count > 0 {
-                for attributes in estimatedAttributes {
-                    let indexPath = attributes.indexPath
-                    let newAttributes = createAttribute(isEstimateItemHeight: false,
-                                                        columnIndex: attributes.columnIndex,
-                                                        yoffset: attributes.frame.minY-lineSpace,
-                                                        indexPath: attributes.indexPath)
-                    attributesCache[indexPath] = newAttributes
-                }
-                let (attributesCache, contentSize) = createAdjustedLayoutOriginY(attributesCache: attributesCache)
-                self.attributesCache = attributesCache
-                self.contentSize = contentSize
-            }
-        
-        }
         return (contentSize: contentSize, attributes: attributesCache)
     }
     func createAttribute(isEstimateItemHeight:Bool, columnIndex: Int, yoffset: CGFloat, indexPath: IndexPath) -> StaggerCollectionViewLayoutAttributes {
@@ -209,13 +193,10 @@ class StaggerCollecitonViewLayout : UICollectionViewLayout {
         return delegate?.staggerCollectionViewLayoutItemHeight(for:indexPath, itemWidth: width) ?? 0
     }
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        var start = Date().timeIntervalSince1970
-        let bounds = collectionView!.bounds
         let ret = attributesCache.values.filter { att in
             return rect.intersects(att.frame)
         }
-        var end = Date().timeIntervalSince1970
-        log("layoutAttributesForElements(\(end-start))@ rect=\(rect), \(ret.count), collectionView.bounds = \(collectionView!.bounds)")
+        log("layoutAttributesForElements@ rect=\(rect), \(ret.count), collectionView.bounds = \(collectionView!.bounds)")
         return ret
     }
     
@@ -244,29 +225,15 @@ class StaggerCollecitonViewLayout : UICollectionViewLayout {
             prepared = false
         }
         if context.invalidatedBounds != .zero {
-            let attributesInBound = attributesCache.values.filter { att in
-                return context.invalidatedBounds.intersects(att.frame)
-            }
-            let estimatedAttributes = attributesInBound.filter {$0.isEstimatedItemSize}
-            if estimatedAttributes.count > 0 {
-                for attributes in estimatedAttributes {
-                    let indexPath = attributes.indexPath
-                    let newAttributes = createAttribute(isEstimateItemHeight: false,
-                                                        columnIndex: attributes.columnIndex,
-                                                        yoffset: attributes.frame.minY-lineSpace,
-                                                        indexPath: attributes.indexPath)
-                    self.attributesCache[indexPath] = newAttributes
-                }
-                
-                
-                context.invalidateItems(at:
-                    estimatedAttributes.map { $0.indexPath })
-                
-                let (attributesCache, contentSize) = createAdjustedLayoutOriginY(attributesCache: self.attributesCache)
-                self.attributesCache = attributesCache
-                self.contentSize = contentSize
-                invalidateAllCachedIndexPaths(context: context)
-            }
+            let (_, attributes, contentSize) = createLayout(isEstimateItemHeight: false, attributesCache: self.attributesCache, visibleBounds: context.invalidatedBounds)
+            self.attributesCache = attributes
+            self.contentSize = contentSize
+            
+            let (attributes2, contentSize2) = createAdjustedLayoutOriginY(attributesCache: self.attributesCache)
+            self.attributesCache = attributes2
+            self.contentSize = contentSize2
+            
+            invalidateAllCachedIndexPaths(context: context)
         }
         super.invalidateLayout(with: context)
     }
