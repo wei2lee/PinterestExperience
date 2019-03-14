@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ContactLeadHighlightView" customModule="AIA" customModuleProvider="target">
+            <connections>
+                <outlet property="appointmentView" destination="Ptx-C0-KHZ" id="zbA-tE-W8V"/>
+                <outlet property="baseView" destination="dcD-kr-CEJ" id="1Mh-pl-NWL"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="327"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dcD-kr-CEJ">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="327"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" verticalHuggingPriority="249" placeholderIntrinsicWidth="375" placeholderIntrinsicHeight="200" translatesAutoresizingMaskIntoConstraints="NO" id="Ptx-C0-KHZ" customClass="EventAppointmentRowView" customModule="AIA" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="327"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" red="0.95686274510000002" green="0.95294117649999999" blue="0.92156862750000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstItem="Ptx-C0-KHZ" firstAttribute="top" secondItem="dcD-kr-CEJ" secondAttribute="top" id="5BT-Rr-vKJ"/>
+                        <constraint firstItem="Ptx-C0-KHZ" firstAttribute="leading" secondItem="dcD-kr-CEJ" secondAttribute="leading" id="CSM-Ps-nzp"/>
+                        <constraint firstAttribute="bottom" secondItem="Ptx-C0-KHZ" secondAttribute="bottom" id="nn6-TP-t7A"/>
+                        <constraint firstAttribute="trailing" secondItem="Ptx-C0-KHZ" secondAttribute="trailing" id="oxh-sc-VKK"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <integer key="value" value="5"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="dcD-kr-CEJ" secondAttribute="bottom" id="F5B-x7-clC"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="dcD-kr-CEJ" secondAttribute="trailing" id="GXJ-pv-xFh"/>
+                <constraint firstItem="dcD-kr-CEJ" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="MY8-gI-bb5"/>
+                <constraint firstItem="dcD-kr-CEJ" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="nsg-Q8-BHF"/>
+            </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="33.5" y="-116.5"/>
+        </view>
+    </objects>
+</document>

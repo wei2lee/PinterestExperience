@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ContactLeadCardHighlightView" customModule="AIA" customModuleProvider="target">
+            <connections>
+                <outlet property="appointmentView" destination="Vm8-kR-MgW" id="Scw-7Q-fMA"/>
+                <outlet property="leadCount1View" destination="s4U-HX-nU8" id="ZXp-tc-xUi"/>
+                <outlet property="leadCount2View" destination="87R-kv-fhH" id="urW-dV-kq3"/>
+                <outlet property="leadCountsView" destination="9tD-FZ-ZOw" id="r0R-Ip-JlZ"/>
+                <outlet property="linerSeparatorView" destination="l8N-dO-lJ5" id="Ub0-yl-98U"/>
+                <outlet property="reminderSeparatorView" destination="b7V-EE-jkX" id="w1T-KR-rfd"/>
+                <outlet property="reminderView" destination="F7H-EG-MOV" id="zE9-qW-o0d"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="358" height="209"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zc1-nS-UdT">
+                    <rect key="frame" x="0.0" y="0.0" width="358" height="209"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="mFh-2b-EBu">
+                            <rect key="frame" x="0.0" y="0.0" width="358" height="209"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9tD-FZ-ZOw" userLabel="LeadCounts View">
+                                    <rect key="frame" x="0.0" y="0.0" width="358" height="87"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="vUn-06-qNW">
+                                            <rect key="frame" x="16" y="10" width="130" height="67"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" placeholderIntrinsicWidth="150" placeholderIntrinsicHeight="67" translatesAutoresizingMaskIntoConstraints="NO" id="s4U-HX-nU8" customClass="LeadCountView" customModule="AIA" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="0.0" width="60" height="67"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </view>
+                                                <view contentMode="scaleToFill" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="749" placeholderIntrinsicWidth="100" placeholderIntrinsicHeight="67" translatesAutoresizingMaskIntoConstraints="NO" id="87R-kv-fhH" customClass="LeadCountView" customModule="AIA" customModuleProvider="target">
+                                                    <rect key="frame" x="70" y="0.0" width="60" height="67"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </view>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="vUn-06-qNW" secondAttribute="bottom" priority="999" constant="10" id="5Ma-Sm-Y4M"/>
+                                        <constraint firstItem="vUn-06-qNW" firstAttribute="top" secondItem="9tD-FZ-ZOw" secondAttribute="top" constant="10" id="MnT-os-DnT"/>
+                                        <constraint firstItem="vUn-06-qNW" firstAttribute="leading" secondItem="9tD-FZ-ZOw" secondAttribute="leading" constant="16" id="kfK-sO-wEw"/>
+                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="vUn-06-qNW" secondAttribute="trailing" priority="999" constant="20" symbolic="YES" id="pId-m8-TdD"/>
+                                    </constraints>
+                                </view>
+                                <view contentMode="scaleToFill" verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="l8N-dO-lJ5">
+                                    <rect key="frame" x="0.0" y="87" width="358" height="1"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0IK-3Z-wc6" userLabel="Liner">
+                                            <rect key="frame" x="0.0" y="0.0" width="358" height="1"/>
+                                            <color key="backgroundColor" red="0.94117647059999998" green="0.93333333330000001" blue="0.8862745098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="1" id="R7U-20-LK9"/>
+                                            </constraints>
+                                        </view>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstItem="0IK-3Z-wc6" firstAttribute="leading" secondItem="l8N-dO-lJ5" secondAttribute="leading" id="Asq-68-9wg"/>
+                                        <constraint firstAttribute="trailing" secondItem="0IK-3Z-wc6" secondAttribute="trailing" id="CPA-Ov-A79"/>
+                                        <constraint firstAttribute="bottom" secondItem="0IK-3Z-wc6" secondAttribute="bottom" id="OEv-Q3-rNk"/>
+                                        <constraint firstItem="0IK-3Z-wc6" firstAttribute="top" secondItem="l8N-dO-lJ5" secondAttribute="top" id="RKE-ez-aVI"/>
+                                    </constraints>
+                                </view>
+                                <view contentMode="scaleToFill" placeholderIntrinsicWidth="358" placeholderIntrinsicHeight="60" translatesAutoresizingMaskIntoConstraints="NO" id="Vm8-kR-MgW" customClass="ContactLeadAppointmentRowView" customModule="AIA" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="88" width="358" height="60"/>
+                                </view>
+                                <view contentMode="scaleToFill" verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="b7V-EE-jkX" userLabel="SeparatorView">
+                                    <rect key="frame" x="0.0" y="148" width="358" height="1"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AkM-Wz-Eqq" userLabel="Liner">
+                                            <rect key="frame" x="0.0" y="0.0" width="358" height="1"/>
+                                            <color key="backgroundColor" red="0.94117647059999998" green="0.93333333330000001" blue="0.8862745098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="1" id="PPs-81-vQR"/>
+                                            </constraints>
+                                        </view>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstItem="AkM-Wz-Eqq" firstAttribute="top" secondItem="b7V-EE-jkX" secondAttribute="top" id="U8e-uQ-Y9s"/>
+                                        <constraint firstAttribute="trailing" secondItem="AkM-Wz-Eqq" secondAttribute="trailing" id="pAU-N0-2ia"/>
+                                        <constraint firstAttribute="bottom" secondItem="AkM-Wz-Eqq" secondAttribute="bottom" id="sNc-D8-nNh"/>
+                                        <constraint firstItem="AkM-Wz-Eqq" firstAttribute="leading" secondItem="b7V-EE-jkX" secondAttribute="leading" id="xUt-ZR-kWy"/>
+                                    </constraints>
+                                </view>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F7H-EG-MOV" customClass="ContactLeadReminderRowView" customModule="AIA" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="149" width="358" height="60"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </view>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" red="0.95686274509803915" green="0.95294117647058818" blue="0.92549019607843142" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="mFh-2b-EBu" secondAttribute="trailing" id="4K6-A0-GQf"/>
+                        <constraint firstItem="mFh-2b-EBu" firstAttribute="leading" secondItem="zc1-nS-UdT" secondAttribute="leading" id="6N9-YU-RSk"/>
+                        <constraint firstItem="mFh-2b-EBu" firstAttribute="top" secondItem="zc1-nS-UdT" secondAttribute="top" id="I4t-Fm-JBq"/>
+                        <constraint firstAttribute="bottom" secondItem="mFh-2b-EBu" secondAttribute="bottom" id="dKC-KN-KuW"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="5"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                            <real key="value" value="1"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                            <color key="value" red="0.94117647058823528" green="0.93333333333333335" blue="0.88627450980392153" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+            </subviews>
+            <constraints>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="zc1-nS-UdT" secondAttribute="bottom" priority="800" id="3Mm-9n-ry2"/>
+                <constraint firstItem="zc1-nS-UdT" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="Imf-QT-sJj"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="zc1-nS-UdT" secondAttribute="trailing" id="hlt-sw-Wxa"/>
+                <constraint firstItem="zc1-nS-UdT" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="uDf-Lx-fr9"/>
+            </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="25" y="-175.5"/>
+        </view>
+    </objects>
+</document>
