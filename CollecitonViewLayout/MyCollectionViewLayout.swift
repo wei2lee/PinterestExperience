@@ -258,9 +258,7 @@ class StaggerCollecitonViewLayout : UICollectionViewLayout {
         }
         return ret
     }
-    
-    
-    
+
     override func shouldInvalidateLayout(forPreferredLayoutAttributes preferredAttributes: UICollectionViewLayoutAttributes, withOriginalAttributes originalAttributes: UICollectionViewLayoutAttributes) -> Bool {
         let ret = super.shouldInvalidateLayout(forPreferredLayoutAttributes: preferredAttributes, withOriginalAttributes: originalAttributes)
         log("shouldInvalidateLayout(forPreferredLayoutAttributes@ ret=  \(ret)")
@@ -278,6 +276,21 @@ class StaggerCollecitonViewLayout : UICollectionViewLayout {
     override func prepare(forCollectionViewUpdates updateItems: [UICollectionViewUpdateItem]) {
         log("prepare(forCollectionViewUpdates@ \(updateItems)")
         super.prepare(forCollectionViewUpdates: updateItems)
+        for updateItem in updateItems {
+            switch updateItem.updateAction {
+            case .insert:
+                log("updateItem = \(updateItem)")
+                break
+            case .delete:
+                break
+            case .move:
+                break
+            case .reload:
+                break
+            case .none:
+                break
+            }
+        }
     }
 
 }
